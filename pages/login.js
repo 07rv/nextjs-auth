@@ -1,6 +1,6 @@
 import Head from "next/head";
-
 import Layout from "@/layout/Layout";
+import LoginPage from "@/components/LoginPage";
 
 export default function Login() {
   return (
@@ -8,7 +8,7 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <h1>Login</h1>
+      <LoginPage />
     </Layout>
   );
 }
