@@ -6,9 +6,14 @@ import Image from "next/image";
 import { HiFingerPrint, HiAtSymbol } from "react-icons/hi";
 import { useState } from "react";
 
+import { signIn } from "next-auth/react";
+
 const LoginPage = () => {
   const [show, setShow] = useState(false);
 
+  async function handleGoogleSignin() {
+    signIn("google", { callackUrl: "http://localhost:3000/" });
+  }
   return (
     <div className="w-3/4 mx-auto flex flex-col gap-10">
       <div className="title">
@@ -54,7 +59,11 @@ const LoginPage = () => {
           </button>
         </div>
         <div className="input-button">
-          <button type="button" className={styles.button_custom}>
+          <button
+            type="button"
+            onClick={handleGoogleSignin}
+            className={styles.button_custom}
+          >
             Sign In with Google{" "}
             <Image src={"/assets/google.svg"} width="20" height={20}></Image>
           </button>
