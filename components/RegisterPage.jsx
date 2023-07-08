@@ -4,13 +4,14 @@ import styles from "@/styles/Form.module.css";
 
 import { HiFingerPrint, HiAtSymbol, HiOutlineUser } from "react-icons/hi";
 import { useState } from "react";
-
+import { useRouter } from "next/router";
 import { registerValidate } from "@/lib/validate";
 
 import { useFormik } from "formik";
 
 const RegisterPage = () => {
   const [show, setShow] = useState({ password: false, confirmpassword: false });
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -22,7 +23,17 @@ const RegisterPage = () => {
     onSubmit,
   });
   async function onSubmit(values) {
-    console.log(values);
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
+
+    await fetch("/api/auth/signup", options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) router.push("/");
+      });
   }
   return (
     <div className="w-3/4 mx-auto flex flex-col gap-10">

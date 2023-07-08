@@ -11,9 +11,10 @@ import { signIn } from "next-auth/react";
 import { useFormik } from "formik";
 
 import login_validate from "@/lib/validate";
-
+import { useRouter } from "next/router";
 const LoginPage = () => {
   const [show, setShow] = useState(false);
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,7 +24,13 @@ const LoginPage = () => {
     onSubmit,
   });
   async function onSubmit(values) {
-    console.log(values);
+    const status = await signIn("credentials", {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+      callbackUrl: "/",
+    });
+    if (status.ok) router.push(status.url);
   }
   async function handleGoogleSignin() {
     signIn("google", { callbackUrl: "http://localhost:3000" });
