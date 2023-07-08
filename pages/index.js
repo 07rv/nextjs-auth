@@ -1,10 +1,11 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import { useState } from "react";
+
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const [session, setSession] = useState(true);
+  const { data: session } = useSession();
   return (
     <>
       <Head>
@@ -31,14 +32,14 @@ function Guest() {
   );
 }
 
-function User() {
+function User({ session }) {
   return (
     <main className="container mx-auto text-center py-20">
       <h3 className="text-4xl font-bold">User world!</h3>
 
       <div className="details">
-        <h5>123456</h5>
-        <h5>123456ujhgf</h5>
+        <h5>{session.user.name}</h5>
+        <h5>{session.user.email}</h5>
       </div>
 
       <div className="flex justify-center">
