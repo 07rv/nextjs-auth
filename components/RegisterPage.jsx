@@ -1,10 +1,11 @@
 import Link from "next/link";
 
 import styles from "@/styles/Form.module.css";
-import Image from "next/image";
 
 import { HiFingerPrint, HiAtSymbol, HiOutlineUser } from "react-icons/hi";
 import { useState } from "react";
+
+import { registerValidate } from "@/lib/validate";
 
 import { useFormik } from "formik";
 
@@ -17,6 +18,7 @@ const RegisterPage = () => {
       password: "",
       confirmpassword: "",
     },
+    validate: registerValidate,
     onSubmit,
   });
   async function onSubmit(values) {
@@ -46,6 +48,11 @@ const RegisterPage = () => {
             <HiOutlineUser size={18} />
           </span>
         </div>
+        {formik.errors.username && formik.touched.username ? (
+          <span className="text-rose-500">{formik.errors.username}</span>
+        ) : (
+          ""
+        )}
         <div className={styles.input_group}>
           <input
             type="text"
@@ -58,6 +65,11 @@ const RegisterPage = () => {
             <HiFingerPrint size={18} />
           </span>
         </div>
+        {formik.errors.email && formik.touched.email ? (
+          <span className="text-rose-500">{formik.errors.email}</span>
+        ) : (
+          ""
+        )}
         <div className={styles.input_group}>
           <input
             type={`${show.password ? "text" : "password"}`}
@@ -73,6 +85,11 @@ const RegisterPage = () => {
             <HiAtSymbol size={18} />
           </span>
         </div>
+        {formik.errors.password && formik.touched.password ? (
+          <span className="text-rose-500">{formik.errors.password}</span>
+        ) : (
+          ""
+        )}
         <div className={styles.input_group}>
           <input
             type={`${show.confirmpassword ? "text" : "password"}`}
@@ -90,7 +107,11 @@ const RegisterPage = () => {
             <HiAtSymbol size={18} />
           </span>
         </div>
-
+        {formik.errors.confirmpassword && formik.touched.confirmpassword ? (
+          <span className="text-rose-500">{formik.errors.confirmpassword}</span>
+        ) : (
+          ""
+        )}
         {/* login buttons */}
         <div className="input-button">
           <button type="submit" className={styles.button}>
