@@ -6,9 +6,22 @@ import Image from "next/image";
 import { HiFingerPrint, HiAtSymbol, HiOutlineUser } from "react-icons/hi";
 import { useState } from "react";
 
+import { useFormik } from "formik";
+
 const RegisterPage = () => {
   const [show, setShow] = useState({ password: false, confirmpassword: false });
-
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+    },
+    onSubmit,
+  });
+  async function onSubmit(values) {
+    console.log(values);
+  }
   return (
     <div className="w-3/4 mx-auto flex flex-col gap-10">
       <div className="title">
@@ -20,13 +33,14 @@ const RegisterPage = () => {
       </div>
 
       {/* form */}
-      <form className="flex flex-col gap-5">
+      <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
         <div className={styles.input_group}>
           <input
             type="username"
             name="username"
             placeholder="Username"
             className={styles.input_text}
+            {...formik.getFieldProps("username")}
           />
           <span className="icon flex items-center px-3">
             <HiOutlineUser size={18} />
@@ -38,6 +52,7 @@ const RegisterPage = () => {
             name="email"
             placeholder="Email"
             className={styles.input_text}
+            {...formik.getFieldProps("email")}
           />
           <span className="icon flex items-center px-3">
             <HiFingerPrint size={18} />
@@ -49,6 +64,7 @@ const RegisterPage = () => {
             name="password"
             placeholder="password"
             className={styles.input_text}
+            {...formik.getFieldProps("password")}
           />
           <span
             className="icon flex items-center px-3"
@@ -63,6 +79,7 @@ const RegisterPage = () => {
             name="confirmpassword"
             placeholder="confirm password"
             className={styles.input_text}
+            {...formik.getFieldProps("confirmpassword")}
           />
           <span
             className="icon flex items-center px-3"
